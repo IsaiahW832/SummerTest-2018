@@ -40,7 +40,7 @@
 #include "ctre\Phoenix.h"
 #include <CameraServer.h>
 #include <cscore.h>
-#include "Vision.h"
+#include "Vision.h"//for vision thread
 
 class Robot : public frc::TimedRobot {
 private:

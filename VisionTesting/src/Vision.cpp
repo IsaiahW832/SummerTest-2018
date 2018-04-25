@@ -8,7 +8,7 @@ void Vision::VisionThread() {
 	//Create Camera object
 	cs::UsbCamera camera = cs::UsbCamera();
 
-	//Set brightness and exposure
+	//Set brightness and exposure-
 	camera.SetBrightness(5);
 	camera.SetExposureManual(50);
 
