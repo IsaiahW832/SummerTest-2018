@@ -40,6 +40,7 @@
 #include "ctre\Phoenix.h"
 #include <CameraServer.h>
 #include <cscore.h>
+#include "Vision.h"
 
 class Robot : public frc::TimedRobot {
 private:

@@ -5,11 +5,20 @@ Vision::Vision() {
 }
 
 void Vision::VisionThread() {
-	//Start capturing video, then set the resolution.
-	cs::UsbCamera camera = CameraServer::GetInstance()->StartAutomaticCapture();
+	//Create Camera object
+	cs::UsbCamera camera = cs::UsbCamera();
+
+	//Set brightness and exposure
+	camera.SetBrightness(5);
+	camera.SetExposureManual(50);
+
+	//Start capturing video
+	camera = CameraServer::GetInstance()->StartAutomaticCapture();
+
+	//Set resolution
 	camera.SetResolution(320, 240); //use 320, 240 for usb camera so that the roborio does not have to convert the image before sending it
-	//
-	//	//takes the video and makes a new output to the smart dashboard(switch to "FindYellow" in the properties of the camera viewer
+
+	//takes the video and makes a new output to the smart dashboard(switch to "FindYellow" in the properties of the camera viewer
 	cs::CvSink cvSink = CameraServer::GetInstance()->GetVideo();
 	cs::CvSource outputStreamStd = CameraServer::GetInstance()->PutVideo("FindYellow", 320, 240);
 
