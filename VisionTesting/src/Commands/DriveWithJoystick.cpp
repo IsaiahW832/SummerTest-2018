@@ -22,7 +22,7 @@ void DriveWithJoystick::Execute()
 		}
 
 		//PID aligning drive
-		driveTrain->SimpleArcadeDrive(oi->GetDriveStick()->GetY(), (Vision::GetOffset()/2));
+		driveTrain->SimpleArcadeDrive(-0.8, (Vision::GetOffset()/2));
 		printf("vision: %f\n", Vision::GetOffset());
 
 	}

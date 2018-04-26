@@ -72,7 +72,7 @@ void Vision::VisionThread() {
 			minEnclosingCircle((cv::Mat)contours_poly[i], center[i], radius[i]);
 
 			//if the radius of the circle is too small, it will not be drawn
-			if(radius[i] > 15 /*&& center[i].y < circleY*/){
+			if(radius[i] > 12 /*&& center[i].y < circleY*/){
 				circleIndex = i;
 				//circleY = center[i].y;
 			}
@@ -103,7 +103,8 @@ void Vision::VisionThread() {
         	 cv::Point2f meanPoint(mean.at<float>(0,0), mean.at<float>(0,1));
         	 cv::circle(src, meanPoint, 3, cv::Scalar(0, 0, 255), -1, 8, 0);
 
-        	 //start grabber
+
+        	 //Start grabber
         	 Vision::seeYellow = true;
 
         	 //Set PID input to current offset
@@ -139,5 +140,7 @@ void Vision::TogglePIDLoop(bool PIDstate) {
 bool Vision::seeYellow = false;
 PIDNumSource* Vision::visionSource = new PIDNumSource(0.0);
 PIDNumOutput* Vision::visionOutput = new PIDNumOutput();
-frc::PIDController* Vision::visionControl = new frc::PIDController(-0.04, -0.005, 0.0, Vision::visionSource, Vision::visionOutput);
-//TODO find what the PID values in the controller mean
+//PI
+//frc::PIDController* Vision::visionControl = new frc::PIDController(-0.0225, -0.021, 0.0, Vision::visionSource, Vision::visionOutput);
+//PID
+frc::PIDController* Vision::visionControl = new frc::PIDController(-0.03, -0.03, -0.0075, Vision::visionSource, Vision::visionOutput);

@@ -6,6 +6,7 @@ grabbingWithButtons::grabbingWithButtons() {
 	currentSpeed = 0;
 	currentDirection = GRABBER_STOP;
 	isRunning = false;
+	autoWanted = false;
 }
 
 // Called just before this Command runs the first time
@@ -102,7 +103,10 @@ void grabbingWithButtons::Execute() {
 		}
 
 		//vision grabber
-		if(!isRunning && Vision::GetSeeYellow() == true){
+		if(oi->GetDriveStick()->GetRawButton(2)){
+			autoWanted == true ? autoWanted = false : autoWanted = true;
+		}
+		if(!isRunning && Vision::GetSeeYellow() == true && autoWanted){
 			grabber->RunGrabber(GRABBER_IN, .8);
 		}
 	}

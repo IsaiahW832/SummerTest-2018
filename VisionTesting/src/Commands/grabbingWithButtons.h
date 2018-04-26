@@ -9,6 +9,7 @@ private:
 	int currentDirection;
 	float currentSpeed;
 	bool isRunning;
+	bool autoWanted;
 public:
 	grabbingWithButtons();
 	void Initialize() override;
