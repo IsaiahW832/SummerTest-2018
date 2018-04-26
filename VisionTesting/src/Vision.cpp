@@ -1,7 +1,8 @@
 #include <Vision.h>
 
 Vision::Vision() {
-
+	//Set up PID loop input range
+    visionControl->SetInputRange(-0.3,0.3);
 }
 
 void Vision::VisionThread() {
@@ -57,8 +58,8 @@ void Vision::VisionThread() {
 		std::vector<float> radiusLarge;
 
 		//Variables for Circle Y coordinates and index in array
-		int circleY = src.cols;
 		int circleIndex = -1;
+		//int circleY = src.cols;
 
 		//create circles around contours
 		for(unsigned int i = 0; i < contours.size(); i++) {
@@ -71,18 +72,21 @@ void Vision::VisionThread() {
 			minEnclosingCircle((cv::Mat)contours_poly[i], center[i], radius[i]);
 
 			//if the radius of the circle is too small, it will not be drawn
-			if(radius[i] > 10){
-				circleY = center[i].y;
+			if(radius[i] > 15 /*&& center[i].y < circleY*/){
 				circleIndex = i;
+				//circleY = center[i].y;
 			}
 
 			cv::drawContours(src, contours_poly, i, cv::Scalar(255, 0, 255), 1, 8, hierarchy, 0, cv::Point() );
 		}
 
+		//draw a line down the middle.
+		cv::line(src, cv::Point(src.cols/2,0), cv::Point(src.cols/2,src.rows), cv::Scalar(0,0,255), 1);
+
         //Find the average of the x coordinates of the circle.
         cv::Mat mean;
         int width = src.cols;
-        //int pixelCenter = width / 2;
+        int pixelCenter = width / 2;
 
         //Only process if circle found
         if(circleIndex > -1){
@@ -99,10 +103,15 @@ void Vision::VisionThread() {
         	 cv::Point2f meanPoint(mean.at<float>(0,0), mean.at<float>(0,1));
         	 cv::circle(src, meanPoint, 3, cv::Scalar(0, 0, 255), -1, 8, 0);
 
+        	 //start grabber
         	 Vision::seeYellow = true;
+
+        	 //Set PID input to current offset
+        	 Vision::visionSource->SetInput((double)meanPoint.x - (double)pixelCenter);
         }
         else{
         	Vision::seeYellow = false;
+        	Vision::visionSource->SetInput(0.0);
         }
 
 		outputStreamStd.PutFrame(src);
@@ -113,4 +122,22 @@ bool Vision::GetSeeYellow() {
 	return Vision::seeYellow;
 }
 
+double Vision::GetOffset(){
+	return Vision::visionOutput->GetValue();
+}
+
+void Vision::TogglePIDLoop(bool PIDstate) {
+	if(PIDstate == true){
+		Vision::visionControl->Enable();
+	}
+	else{
+		Vision::visionControl->Disable();
+	}
+}
+
+
 bool Vision::seeYellow = false;
+PIDNumSource* Vision::visionSource = new PIDNumSource(0.0);
+PIDNumOutput* Vision::visionOutput = new PIDNumOutput();
+frc::PIDController* Vision::visionControl = new frc::PIDController(-0.04, -0.005, 0.0, Vision::visionSource, Vision::visionOutput);
+//TODO find what the PID values in the controller mean

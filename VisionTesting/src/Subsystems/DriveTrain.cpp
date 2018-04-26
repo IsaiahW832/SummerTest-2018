@@ -225,6 +225,11 @@ void DriveTrain::ArcadeDrive(float xDir, float yDir, float zRotation, float gove
 	DriveTrain::GetEncoderValue();
 }
 
+void DriveTrain::SimpleArcadeDrive(float xSpeed, float zRotation){
+	float slowSpeed = xSpeed/1.3;
+	_driveTrain->ArcadeDrive(-slowSpeed, zRotation, true);
+}
+
 void DriveTrain::TankDrive(double lPower, double rPower) {
 	_leftSide->Set(lPower);
 	_rightSide->Set(-rPower);
