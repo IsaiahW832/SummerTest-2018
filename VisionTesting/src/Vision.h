@@ -14,7 +14,7 @@ class Vision {
 private:
 	static bool seeYellow;
 
-	//PID Pointers
+	//PID Pointers/
 	static PIDNumSource* visionSource;
 	static PIDNumOutput* visionOutput;
 	static frc::PIDController* visionControl;

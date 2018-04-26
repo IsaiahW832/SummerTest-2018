@@ -21,7 +21,7 @@ void DriveWithJoystick::Execute()
 			Vision::TogglePIDLoop(true);
 		}
 
-		//PID aligning drive
+		//PID aligning drive/
 		driveTrain->SimpleArcadeDrive(-0.8, (Vision::GetOffset()/2));
 		printf("vision: %f\n", Vision::GetOffset());
 

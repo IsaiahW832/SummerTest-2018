@@ -234,7 +234,7 @@ void DriveTrain::TankDrive(double lPower, double rPower) {
 	_leftSide->Set(lPower);
 	_rightSide->Set(-rPower);
 }
-//This is for testing Do not call besides to test
+//This is for testing Do not call besides to test/
 void DriveTrain::DriveRampUp(float yDir){
 	double SpeedOfY = 0;
 

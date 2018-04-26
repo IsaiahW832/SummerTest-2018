@@ -116,7 +116,7 @@ void grabbingWithButtons::Execute() {
 #endif
 }
 
-// Make this return true when this Command no longer needs to run execute()
+// Make this return true when this Command no longer needs to run execute()/
 bool grabbingWithButtons::IsFinished() {
 	return false;
 }

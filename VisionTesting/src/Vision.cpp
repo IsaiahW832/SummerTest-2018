@@ -142,5 +142,5 @@ PIDNumSource* Vision::visionSource = new PIDNumSource(0.0);
 PIDNumOutput* Vision::visionOutput = new PIDNumOutput();
 //PI
 //frc::PIDController* Vision::visionControl = new frc::PIDController(-0.0225, -0.021, 0.0, Vision::visionSource, Vision::visionOutput);
-//PID
+//PID/
 frc::PIDController* Vision::visionControl = new frc::PIDController(-0.03, -0.03, -0.0075, Vision::visionSource, Vision::visionOutput);
